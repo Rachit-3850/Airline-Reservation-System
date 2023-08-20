@@ -61,6 +61,7 @@ public class RandomGenerator {
         chosenDestinations[1][2] = toWhichCityLong;
         return chosenDestinations;
     }
+    // public 
 
     /*Generates the Random Number of Seats for each flight*/
     public int randomNumOfSeats() {

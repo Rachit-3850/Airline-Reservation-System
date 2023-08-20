@@ -14,7 +14,10 @@ public class FlightReservation implements DisplayClass {
     //        ************************************************************ Fields ************************************************************
     Flight flight = new Flight();
     int flightIndexInFlightList;
-
+    FlightSchedule f;
+    public FlightReservation(FlightSchedule f) {
+        this.f = f;
+    }
     //        ************************************************************ Behaviours/Methods ************************************************************
 
 
@@ -28,9 +31,40 @@ public class FlightReservation implements DisplayClass {
      * @param numOfTickets number of tickets to be booked
      * @param userID       userID of the user which is booking the flight
      */
-    void bookFlight(String flightNo, int numOfTickets, String userID) {
+    // void bookFlight(String flightNo, int numOfTickets, String userID) {
+    //     boolean isFound = false;
+    //     for (Flight f1 : flight.getFlightList()) {
+    //         if (flightNo.equalsIgnoreCase(f1.getFlightNumber())) {
+    //             for (Customer customer : Customer.customerCollection) {
+    //                 if (userID.equals(customer.getUserID())) {
+    //                     isFound = true;
+    //                     f1.setNoOfSeatsInTheFlight(f1.getNoOfSeats() - numOfTickets);
+    //                     if (!f1.isCustomerAlreadyAdded(f1.getListOfRegisteredCustomersInAFlight(), customer)) {
+    //                         f1.addNewCustomerToFlight(customer);
+    //                     }
+    //                     if (isFlightAlreadyAddedToCustomerList(customer.flightsRegisteredByUser, f1)) {
+    //                         addNumberOfTicketsToAlreadyBookedFlight(customer, numOfTickets);
+    //                         if (flightIndex(flight.getFlightList(), flight) != -1) {
+    //                             customer.addExistingFlightToCustomerList(flightIndex(flight.getFlightList(), flight), numOfTickets);
+    //                         }
+    //                     } else {
+    //                         customer.addNewFlightToCustomerList(f1);
+    //                         addNumberOfTicketsForNewFlight(customer, numOfTickets);
+    //                     }
+    //                 break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if (!isFound) {
+    //         System.out.println("Invalid Flight Number...! No flight with the  ID \"" + flightNo + "\" was found...");
+    //     } else {
+    //         System.out.printf("\n %50s You've booked %d tickets for Flight \"%5s\"...", "", numOfTickets, flightNo.toUpperCase());
+    //     }
+    // }
+    void bookFlight(String flightNo, int numOfTickets, String userID , String sourceCity) {
         boolean isFound = false;
-        for (Flight f1 : flight.getFlightList()) {
+        for (Flight f1 : f.flightMap.get(sourceCity)) {
             if (flightNo.equalsIgnoreCase(f1.getFlightNumber())) {
                 for (Customer customer : Customer.customerCollection) {
                     if (userID.equals(customer.getUserID())) {
@@ -194,17 +228,17 @@ public class FlightReservation implements DisplayClass {
         }
     }
 
-    @Override
-    public void displayRegisteredUsersForAllFlight() {
-        System.out.println();
-        for (Flight flight : flight.getFlightList()) {
-            List<Customer> c = flight.getListOfRegisteredCustomersInAFlight();
-            int size = flight.getListOfRegisteredCustomersInAFlight().size();
-            if (size != 0) {
-                displayHeaderForUsers(flight, c);
-            }
-        }
-    }
+    // @Override
+    // public void displayRegisteredUsersForAllFlight() {
+    //     System.out.println();
+    //     for (Flight flight : flight.getFlightList()) {
+    //         List<Customer> c = flight.getListOfRegisteredCustomersInAFlight();
+    //         int size = flight.getListOfRegisteredCustomersInAFlight().size();
+    //         if (size != 0) {
+    //             displayHeaderForUsers(flight, c);
+    //         }
+    //     }
+    // }
 
     int flightIndex(List<Flight> flightList, Flight flight) {
         int i = -1;
@@ -216,12 +250,22 @@ public class FlightReservation implements DisplayClass {
         return i;
     }
 
+    // @Override
+    // public void displayRegisteredUsersForASpecificFlight(String flightNum) {
+    //     System.out.println();
+    //     for (Flight flight : flight.getFlightList()) {
+    //         List<Customer> c = flight.getListOfRegisteredCustomersInAFlight();
+    //         if (flight.getFlightNumber().equalsIgnoreCase(flightNum)) {
+    //             displayHeaderForUsers(flight, c);
+    //         }
+    //     }
+    // }
     @Override
-    public void displayRegisteredUsersForASpecificFlight(String flightNum) {
+    public void displayRegisteredUsersForASpecificFlight(String city ,String flightNum) {
         System.out.println();
-        for (Flight flight : flight.getFlightList()) {
-            List<Customer> c = flight.getListOfRegisteredCustomersInAFlight();
+        for (Flight flight : f.flightMap.get(city)) {
             if (flight.getFlightNumber().equalsIgnoreCase(flightNum)) {
+                List<Customer> c = flight.getListOfRegisteredCustomersInAFlight();
                 displayHeaderForUsers(flight, c);
             }
         }

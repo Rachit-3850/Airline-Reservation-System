@@ -28,7 +28,9 @@ public class User {
         int countNumOfUsers = 1;
         RolesAndPermissions r1 = new RolesAndPermissions();
         Flight f1 = new Flight();
-        FlightReservation bookingAndReserving = new FlightReservation();
+        FlightSchedule f = new FlightSchedule();
+        f.flights();
+        FlightReservation bookingAndReserving = new FlightReservation(f);
         Customer c1 = new Customer();
         f1.flightScheduler();
         Scanner read = new Scanner(System.in);
@@ -161,22 +163,51 @@ public class User {
                             bookingAndReserving.displayFlightsRegisteredByOneUser(id);
                         } else if (desiredOption == 7) {
                             c1.displayArtWork(4);
-                            System.out.print(
-                                    "Do you want to display Passengers of all flights or a specific flight.... 'Y/y' for displaying all flights and 'N/n' to look for a"
-                                            +
-                                            " specific flight.... ");
-                            char choice = read1.nextLine().charAt(0);
-                            if ('y' == choice || 'Y' == choice) {
-                                bookingAndReserving.displayRegisteredUsersForAllFlight();
-                            } else if ('n' == choice || 'N' == choice) {
-                                f1.displayFlightSchedule();
-                                System.out.print(
-                                        "Enter the Flight Number to display the list of passengers registered in that flight... ");
-                                String flightNum = read1.nextLine();
-                                bookingAndReserving.displayRegisteredUsersForASpecificFlight(flightNum);
-                            } else {
-                                System.out.println("Invalid Choice...No Response...!");
+                            f.DisplayCities();
+                            System.out.print("\nEnter the desired Source :\t ");
+                            String sourceCity = read1.nextLine();
+                            while (!f.validSourceCity(sourceCity)) {
+                                sourceCity = read1.nextLine();
                             }
+                            f.showFlights(sourceCity);
+                            System.out.print(
+                                    "Enter the Flight Number to display the list of passengers registered in that flight... ");
+                            String flightNum = read1.nextLine();
+                            bookingAndReserving.displayRegisteredUsersForASpecificFlight(sourceCity, flightNum);
+                            // System.out.print(
+                            // "Do you want to display Passengers of all flights or a specific flight....
+                            // 'Y/y' for displaying all flights and 'N/n' to look for a"
+                            // +
+                            // " specific flight.... ");
+                            // char choice = read1.nextLine().charAt(0);
+
+                            // if ('y' == choice || 'Y' == choice) {
+                            // bookingAndReserving.displayRegisteredUsersForAllFlight();
+                            // } else if ('n' == choice || 'N' == choice) {
+                            // // f1.displayFlightSchedule();
+                            // // System.out.print(
+                            // // "Enter the Flight Number to display the list of passengers registered in
+                            // that
+                            // // flight... ");
+                            // // String flightNum = read1.nextLine();
+                            // // bookingAndReserving.displayRegisteredUsersForASpecificFlight(flightNum);
+                            // // f.DisplayCities();
+                            // // System.out.print("\nEnter the desired Source :\t ");
+                            // // String sourceCity = read1.nextLine();
+                            // // while (!f.validSourceCity(sourceCity)) {
+                            // // sourceCity = read1.nextLine();
+                            // // }
+                            // // f.showFlights(sourceCity);
+                            // // System.out.print("Enter the Flight Number to display the list of
+                            // passengers registered in that flight... "
+                            // // );
+                            // // String flightNum = read1.nextLine();
+                            // // bookingAndReserving.displayRegisteredUsersForASpecificFlight(sourceCity
+                            // ,flightNum);
+                            // }
+                            // else {
+                            // System.out.println("Invalid Choice...No Response...!");
+                            // }
                         } else if (desiredOption == 8) {
                             c1.displayArtWork(5);
                             f1.displayFlightSchedule();
@@ -248,8 +279,28 @@ public class User {
                         System.out.print("Enter the desired Choice :   ");
                         desiredChoice = read.nextInt();
                         if (desiredChoice == 1) {
-                            bookingAndReserving.displayArtWork(1);
+                            // bookingAndReserving.displayArtWork(1);
                             f1.displayFlightSchedule();
+                            // System.out.print("\nEnter the desired flight number to book :\t ");
+                            // String flightToBeBooked = read1.nextLine();
+                            // System.out.print("Enter the Number of tickets for " + flightToBeBooked + "
+                            // flight : ");
+                            // int numOfTickets = read.nextInt();
+                            // while (numOfTickets > 10) {
+                            // System.out.print(
+                            // "ERROR!! You can't book more than 10 tickets at a time for single
+                            // flight....Enter number of tickets again : ");
+                            // numOfTickets = read.nextInt();
+                            // }
+                            // bookingAndReserving.bookFlight(flightToBeBooked, numOfTickets, result[1]);
+                            bookingAndReserving.displayArtWork(1);
+                            f.DisplayCities();
+                            System.out.print("\nEnter the desired Source :\t ");
+                            String sourceCity = read1.nextLine();
+                            while (!f.validSourceCity(sourceCity)) {
+                                sourceCity = read1.nextLine();
+                            }
+                            f.showFlights(sourceCity);
                             System.out.print("\nEnter the desired flight number to book :\t ");
                             String flightToBeBooked = read1.nextLine();
                             System.out.print("Enter the Number of tickets for " + flightToBeBooked + " flight :   ");
@@ -259,7 +310,8 @@ public class User {
                                         "ERROR!! You can't book more than 10 tickets at a time for single flight....Enter number of tickets again : ");
                                 numOfTickets = read.nextInt();
                             }
-                            bookingAndReserving.bookFlight(flightToBeBooked, numOfTickets, result[1]);
+                            bookingAndReserving.bookFlight(flightToBeBooked, numOfTickets, result[1], sourceCity);
+
                         } else if (desiredChoice == 2) {
                             bookingAndReserving.displayArtWork(2);
                             c1.editUserInfo(result[1]);
@@ -277,8 +329,15 @@ public class User {
                             }
                         } else if (desiredChoice == 4) {
                             bookingAndReserving.displayArtWork(4);
-                            f1.displayFlightSchedule();
-                            f1.displayMeasurementInstructions();
+                            // f1.displayFlightSchedule();
+                            // f1.displayMeasurementInstructions();
+                            f.DisplayCities();
+                            System.out.print("\nEnter the desired Source :\t ");
+                            String sourceCity = read1.nextLine();
+                            while (!f.validSourceCity(sourceCity)) {
+                                sourceCity = read1.nextLine();
+                            }
+                            f.showFlights(sourceCity);
                         } else if (desiredChoice == 5) {
                             bookingAndReserving.displayArtWork(5);
                             bookingAndReserving.cancelFlight(result[1]);
@@ -291,7 +350,7 @@ public class User {
                                 System.out.println(
                                         "Invalid Choice...Looks like you're Robot...Entering values randomly...You've Have to login again...");
                             }
-                            
+
                             desiredChoice = 0;
                         }
                     } while (desiredChoice != 0);

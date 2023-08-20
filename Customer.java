@@ -1,8 +1,10 @@
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Customer {
 
-    //        ************************************************************ Fields ************************************************************
+    // ************************************************************ Fields
+    // ************************************************************
     private final String userID;
     private String email;
     private String name;
@@ -14,8 +16,9 @@ public class Customer {
     public List<Integer> numOfTicketsBookedByUser;
     public static final List<Customer> customerCollection = User.getCustomersCollection();
 
-    //        ************************************************************ Behaviours/Methods ************************************************************
-
+    // ************************************************************
+    // Behaviours/Methods
+    // ************************************************************
 
     Customer() {
         this.userID = null;
@@ -53,8 +56,10 @@ public class Customer {
     }
 
     /**
-     * Takes input for the new customer and adds them to programs memory. isUniqueData() validates the entered email
-     * and returns true if the entered email is already registered. If email is already registered, program will ask the user
+     * Takes input for the new customer and adds them to programs memory.
+     * isUniqueData() validates the entered email
+     * and returns true if the entered email is already registered. If email is
+     * already registered, program will ask the user
      * to enter new email address to get himself register.
      */
     public void addNewCustomer() {
@@ -64,8 +69,15 @@ public class Customer {
         String name = read.nextLine();
         System.out.print("Enter your email address :\t");
         String email = read.nextLine();
+        while (!isValid(email)) {
+            System.out.println(
+                    "ERROR!!! Invalid email format... Use new email or login using the previous credentials....");
+            System.out.print("Enter your email address :\t");
+            email = read.nextLine();
+        }
         while (isUniqueData(email)) {
-            System.out.println("ERROR!!! User with the same email already exists... Use new email or login using the previous credentials....");
+            System.out.println(
+                    "ERROR!!! User with the same email already exists... Use new email or login using the previous credentials....");
             System.out.print("Enter your email address :\t");
             email = read.nextLine();
         }
@@ -81,21 +93,36 @@ public class Customer {
     }
 
     /**
-     * Returns String consisting of customers data(name, age, email etc...) for displaying.
+     * Returns String consisting of customers data(name, age, email etc...) for
+     * displaying.
      * randomIDDisplay() adds space between the userID for easy readability.
      *
      * @param i for serial numbers.
      * @return customers data in String
      */
     private String toString(int i) {
-        return String.format("%10s| %-10d | %-10s | %-32s | %-7s | %-27s | %-35s | %-23s |", "", i, randomIDDisplay(userID), name, age, email, address, phone);
+        return String.format("%10s| %-10d | %-10s | %-32s | %-7s | %-27s | %-35s | %-23s |", "", i,
+                randomIDDisplay(userID), name, age, email, address, phone);
     }
 
     /**
-     * Searches for customer with the given ID and displays the customers' data if found.
+     * Searches for customer with the given ID and displays the customers' data if
+     * found.
      *
      * @param ID of the searching/required customer
      */
+    public boolean isValid(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
     public void searchUser(String ID) {
         boolean isFound = false;
         Customer customerWithTheID = customerCollection.get(0);
@@ -110,7 +137,9 @@ public class Customer {
         }
         if (isFound) {
             System.out.println(customerWithTheID.toString(1));
-            System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n", "");
+            System.out.printf(
+                    "%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n",
+                    "");
         } else {
             System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", ID);
         }
@@ -124,7 +153,7 @@ public class Customer {
     public boolean isUniqueData(String emailID) {
         boolean isUnique = false;
         for (Customer c : customerCollection) {
-            if (emailID.equals(c.getEmail())) {
+            if (emailID.equalsIgnoreCase(c.getEmail())) {
                 isUnique = true;
                 break;
             }
@@ -142,7 +171,20 @@ public class Customer {
                 String name = read.nextLine();
                 c.setName(name);
                 System.out.print("Enter the new email address of Passenger " + name + ":\t");
-                c.setEmail(read.nextLine());
+                String email = read.nextLine();
+                while (!isValid(email)) {
+                    System.out.println(
+                            "ERROR!!! Invalid email format... Use new email or login using the previous credentials....");
+                    System.out.print("Enter your email address :\t");
+                    email = read.nextLine();
+                }
+                // while (isUniqueData(email)) {
+                //     System.out.println(
+                //             "ERROR!!! User with the same email already exists... Use new email or login using the previous credentials....");
+                //     System.out.print("Enter your email address :\t");
+                //     email = read.nextLine();
+                // }
+                c.setEmail(email);
                 System.out.print("Enter the new Phone number of Passenger " + name + ":\t");
                 c.setPhone(read.nextLine());
                 System.out.print("Enter the new address of Passenger " + name + ":\t");
@@ -170,7 +212,8 @@ public class Customer {
         }
         if (isFound) {
             iterator.remove();
-            System.out.printf("\n%-50sPrinting all  Customer's Data after deleting Customer with the ID %s.....!!!!\n", "", ID);
+            System.out.printf("\n%-50sPrinting all  Customer's Data after deleting Customer with the ID %s.....!!!!\n",
+                    "", ID);
             displayCustomersData(false);
         } else {
             System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", ID);
@@ -179,20 +222,23 @@ public class Customer {
 
     /**
      * Shows the customers' data in formatted way.
-     * @param showHeader to check if we want to print ascii art for the customers' data.
+     * 
+     * @param showHeader to check if we want to print ascii art for the customers'
+     *                   data.
      */
     public void displayCustomersData(boolean showHeader) {
         if (showHeader) {
             displayArtWork(3);
         }
         displayHeader();
-        Iterator<Customer> iterator = customerCollection.iterator();
+
         int i = 0;
-        while (iterator.hasNext()) {
+        for (Customer c : customerCollection) {
             i++;
-            Customer c = iterator.next();
             System.out.println(c.toString(i));
-            System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n", "");
+            System.out.printf(
+                    "%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n",
+                    "");
         }
     }
 
@@ -201,9 +247,15 @@ public class Customer {
      */
     void displayHeader() {
         System.out.println();
-        System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n", "");
-        System.out.printf("%10s| SerialNum  |   UserID   | Passenger Names                  | Age     | EmailID\t\t       | Home Address\t\t\t     | Phone Number\t       |%n", "");
-        System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n", "");
+        System.out.printf(
+                "%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n",
+                "");
+        System.out.printf(
+                "%10s| SerialNum  |   UserID   | Passenger Names                  | Age     | EmailID\t\t       | Home Address\t\t\t     | Phone Number\t       |%n",
+                "");
+        System.out.printf(
+                "%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n",
+                "");
         System.out.println();
 
     }
@@ -237,12 +289,13 @@ public class Customer {
      */
     void addNewFlightToCustomerList(Flight f) {
         this.flightsRegisteredByUser.add(f);
-//        numOfFlights++;
+        // numOfFlights++;
     }
 
     /**
      * Adds numOfTickets to already booked flights
-     * @param index at which flight is registered in the arraylist
+     * 
+     * @param index        at which flight is registered in the arraylist
      * @param numOfTickets how many tickets to add
      */
     void addExistingFlightToCustomerList(int index, int numOfTickets) {
@@ -259,7 +312,7 @@ public class Customer {
         String artWork = "";
         if (option == 1) {
             artWork = """
-                                        
+
                     d8b   db d88888b db   d8b   db       .o88b. db    db .d8888. d888888b  .d88b.  .88b  d88. d88888b d8888b.\s
                     888o  88 88'     88   I8I   88      d8P  Y8 88    88 88'  YP `~~88~~' .8P  Y8. 88'YbdP`88 88'     88  `8D\s
                     88V8o 88 88ooooo 88   I8I   88      8P      88    88 `8bo.      88    88    88 88  88  88 88ooooo 88oobY'\s
@@ -271,7 +324,7 @@ public class Customer {
                     """;
         } else if (option == 2) {
             artWork = """
-                                        
+
                     .d8888. d88888b  .d8b.  d8888b.  .o88b. db   db       .o88b. db    db .d8888. d888888b  .d88b.  .88b  d88. d88888b d8888b.\s
                     88'  YP 88'     d8' `8b 88  `8D d8P  Y8 88   88      d8P  Y8 88    88 88'  YP `~~88~~' .8P  Y8. 88'YbdP`88 88'     88  `8D\s
                     `8bo.   88ooooo 88ooo88 88oobY' 8P      88ooo88      8P      88    88 `8bo.      88    88    88 88  88  88 88ooooo 88oobY'\s
@@ -283,7 +336,7 @@ public class Customer {
                     """;
         } else if (option == 3) {
             artWork = """
-                                        
+
                     .d8888. db   db  .d88b.  db   d8b   db d888888b d8b   db  d888b        .d8b.  db      db           d8888b.  .d8b.  .d8888. .d8888. d88888b d8b   db  d888b  d88888b d8888b. .d8888.\s
                     88'  YP 88   88 .8P  Y8. 88   I8I   88   `88'   888o  88 88' Y8b      d8' `8b 88      88           88  `8D d8' `8b 88'  YP 88'  YP 88'     888o  88 88' Y8b 88'     88  `8D 88'  YP\s
                     `8bo.   88ooo88 88    88 88   I8I   88    88    88V8o 88 88           88ooo88 88      88           88oodD' 88ooo88 `8bo.   `8bo.   88ooooo 88V8o 88 88      88ooooo 88oobY' `8bo.  \s
@@ -295,14 +348,14 @@ public class Customer {
                     """;
         } else if (option == 4) {
             artWork = """
-                                        
+
                     d8888b. d88888b  d888b  d888888b .d8888. d888888b d88888b d8888b. d88888b d8888b.      d8888b.  .d8b.  .d8888. .d8888. d88888b d8b   db  d888b  d88888b d8888b. .d8888.     \s
                     88  `8D 88'     88' Y8b   `88'   88'  YP `~~88~~' 88'     88  `8D 88'     88  `8D      88  `8D d8' `8b 88'  YP 88'  YP 88'     888o  88 88' Y8b 88'     88  `8D 88'  YP     \s
                     88oobY' 88ooooo 88         88    `8bo.      88    88ooooo 88oobY' 88ooooo 88   88      88oodD' 88ooo88 `8bo.   `8bo.   88ooooo 88V8o 88 88      88ooooo 88oobY' `8bo.       \s
                     88`8b   88~~~~~ 88  ooo    88      `Y8b.    88    88~~~~~ 88`8b   88~~~~~ 88   88      88~~~   88~~~88   `Y8b.   `Y8b. 88~~~~~ 88 V8o88 88  ooo 88~~~~~ 88`8b     `Y8b.     \s
                     88 `88. 88.     88. ~8~   .88.   db   8D    88    88.     88 `88. 88.     88  .8D      88      88   88 db   8D db   8D 88.     88  V888 88. ~8~ 88.     88 `88. db   8D     \s
                     88   YD Y88888P  Y888P  Y888888P `8888Y'    YP    Y88888P 88   YD Y88888P Y8888D'      88      YP   YP `8888Y' `8888Y' Y88888P VP   V8P  Y888P  Y88888P 88   YD `8888Y' \s
-                                        
+
                        \s
                     d888888b d8b   db      d88888b db      d888888b  d888b  db   db d888888b                                                                                                    \s
                       `88'   888o  88      88'     88        `88'   88' Y8b 88   88 `~~88~~'                                                                                                    \s
@@ -315,7 +368,7 @@ public class Customer {
                     """;
         } else if (option == 5) {
             artWork = """
-                                        
+
                     d8888b. d88888b db      d88888b d888888b d88888b      d88888b db      d888888b  d888b  db   db d888888b\s
                     88  `8D 88'     88      88'     `~~88~~' 88'          88'     88        `88'   88' Y8b 88   88 `~~88~~'\s
                     88   88 88ooooo 88      88ooooo    88    88ooooo      88ooo   88         88    88      88ooo88    88   \s
@@ -329,7 +382,8 @@ public class Customer {
         System.out.println(artWork);
     }
 
-    //        ************************************************************ Setters & Getters ************************************************************
+    // ************************************************************ Setters &
+    // Getters ************************************************************
 
     public List<Flight> getFlightsRegisteredByUser() {
         return flightsRegisteredByUser;
