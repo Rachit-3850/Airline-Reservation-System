@@ -112,8 +112,6 @@ public class Flight extends FlightDistance {
     }
 
    
-
-   
     @Override
     public String[] calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;
