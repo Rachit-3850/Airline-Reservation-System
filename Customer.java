@@ -145,11 +145,7 @@ public class Customer {
         }
     }
 
-    /**
-     * Returns true if the given emailID is already registered, false otherwise
-     *
-     * @param emailID to be checked in the list
-     */
+  
     public boolean isUniqueData(String emailID) {
         boolean isUnique = false;
         for (Customer c : customerCollection) {
@@ -178,12 +174,7 @@ public class Customer {
                     System.out.print("Enter your email address :\t");
                     email = read.nextLine();
                 }
-                // while (isUniqueData(email)) {
-                //     System.out.println(
-                //             "ERROR!!! User with the same email already exists... Use new email or login using the previous credentials....");
-                //     System.out.print("Enter your email address :\t");
-                //     email = read.nextLine();
-                // }
+               
                 c.setEmail(email);
                 System.out.print("Enter the new Phone number of Passenger " + name + ":\t");
                 c.setPhone(read.nextLine());
@@ -220,12 +211,7 @@ public class Customer {
         }
     }
 
-    /**
-     * Shows the customers' data in formatted way.
-     * 
-     * @param showHeader to check if we want to print ascii art for the customers'
-     *                   data.
-     */
+   
     public void displayCustomersData(boolean showHeader) {
         if (showHeader) {
             displayArtWork(3);
@@ -242,9 +228,7 @@ public class Customer {
         }
     }
 
-    /**
-     * Shows the header for printing customers data
-     */
+    
     void displayHeader() {
         System.out.println();
         System.out.printf(
@@ -260,16 +244,7 @@ public class Customer {
 
     }
 
-    /**
-     * Adds space between userID to increase its readability
-     * <p>
-     * Example:
-     * </p>
-     * <b>"920 191" is much more readable than "920191"</b>
-     *
-     * @param randomID id to add space
-     * @return randomID with added space
-     */
+   
     String randomIDDisplay(String randomID) {
         StringBuilder newString = new StringBuilder();
         for (int i = 0; i <= randomID.length(); i++) {
@@ -282,32 +257,19 @@ public class Customer {
         return newString.toString();
     }
 
-    /**
-     * Associates a new flight with the specified customer
-     *
-     * @param f flight to associate
-     */
+    
     void addNewFlightToCustomerList(Flight f) {
         this.flightsRegisteredByUser.add(f);
-        // numOfFlights++;
+    
     }
 
-    /**
-     * Adds numOfTickets to already booked flights
-     * 
-     * @param index        at which flight is registered in the arraylist
-     * @param numOfTickets how many tickets to add
-     */
+  
     void addExistingFlightToCustomerList(int index, int numOfTickets) {
         int newNumOfTickets = numOfTicketsBookedByUser.get(index) + numOfTickets;
         this.numOfTicketsBookedByUser.set(index, newNumOfTickets);
     }
 
-    /**
-     * Prints out <b>"ASCII Art"</b> for the specified words.
-     *
-     * @param option specifies which word to print.
-     */
+  
     void displayArtWork(int option) {
         String artWork = "";
         if (option == 1) {

@@ -67,12 +67,7 @@ class FlightSchedule {
                 distanceBetweenTheCities, gate.toUpperCase()));
             }
         }
-        // int count = 0;
-        // for(Flight flight : flightMap.get("Lucknow")) {
-        //     System.out.println(flight.toString(++count));
-            
-        // }
-        // System.out.println(flightMap.get("Lucknow"));
+       
     }
     public void DisplayCities() {
         System.out.println();
@@ -110,13 +105,27 @@ class FlightSchedule {
              System.out.print(
                     "+------+-------------------------------------------+-----------+------------------+-----------------------+------------------------+---------------------------+-------------+--------+------------------------+\n");
         }
-        // System.out.println(flightMap.get("Lucknow"));
+        
+    }
+    void deleteFlight(String flightNumber , String sourceCity) {
+        boolean isFound = false;
+        int index = 0;
+        for(Flight  e : flightMap.get(sourceCity)) {
+            if(e.getFlightNumber().equals(flightNumber)) {
+                isFound = true;
+                break;
+            }
+            index++;
+        }
+        if (isFound) {
+            flightMap.get(sourceCity).remove(index);
+        } else {
+            System.out.println("Flight with given Number not found...");
+        }
     }
     public String createNewFlightsAndTime() {
 
         Calendar c = Calendar.getInstance();
-        // Incrementing nextFlightDay, so that next scheduled flight would be in the
-        // future, not in the present
         nextFlightDay += Math.random() * 7;
         c.add(Calendar.DATE, nextFlightDay);
         c.add(Calendar.HOUR, nextFlightDay);
@@ -180,10 +189,7 @@ class FlightSchedule {
         distance = Math.acos(distance);
         distance = radianToDegree(distance);
         distance = distance * 60 * 1.1515;
-        /*
-         * On the Zero-Index, distance will be in Miles, on 1st-index, distance will be
-         * in KM and on the 2nd index distance will be in KNOTS
-         */
+        
         String[] distanceString = new String[3];
         distanceString[0] = String.format("%.2f", distance * 0.8684);
         distanceString[1] = String.format("%.2f", distance * 1.609344);

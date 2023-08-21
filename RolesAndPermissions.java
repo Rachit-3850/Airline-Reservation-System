@@ -13,12 +13,6 @@ public class RolesAndPermissions extends User {
         return isFound;
     }
 
-    /**
-     * Checks if the passenger with specified credentials is registered or not.
-     * @param email of the specified passenger4
-     * @param password of the specified passenger
-     * @return 1 with the userID if the passenger is registered, else 0
-     */
     public String isPassengerRegistered(String email, String password) {
         String isFound = "0";
         for (Customer c : Customer.customerCollection) {

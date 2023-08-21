@@ -17,7 +17,6 @@ public class User {
         f.flights();
         FlightReservation bookingAndReserving = new FlightReservation(f);
         Customer c1 = new Customer();
-        f1.flightScheduler();
         Scanner read = new Scanner(System.in);
 
         welcomeScreen(1);
@@ -135,46 +134,18 @@ public class User {
                                     "Enter the Flight Number to display the list of passengers registered in that flight... ");
                             String flightNum = read1.nextLine();
                             bookingAndReserving.displayRegisteredUsersForASpecificFlight(sourceCity, flightNum);
-                            // System.out.print(
-                            // "Do you want to display Passengers of all flights or a specific flight....
-                            // 'Y/y' for displaying all flights and 'N/n' to look for a"
-                            // +
-                            // " specific flight.... ");
-                            // char choice = read1.nextLine().charAt(0);
-
-                            // if ('y' == choice || 'Y' == choice) {
-                            // bookingAndReserving.displayRegisteredUsersForAllFlight();
-                            // } else if ('n' == choice || 'N' == choice) {
-                            // // f1.displayFlightSchedule();
-                            // // System.out.print(
-                            // // "Enter the Flight Number to display the list of passengers registered in
-                            // that
-                            // // flight... ");
-                            // // String flightNum = read1.nextLine();
-                            // // bookingAndReserving.displayRegisteredUsersForASpecificFlight(flightNum);
-                            // // f.DisplayCities();
-                            // // System.out.print("\nEnter the desired Source :\t ");
-                            // // String sourceCity = read1.nextLine();
-                            // // while (!f.validSourceCity(sourceCity)) {
-                            // // sourceCity = read1.nextLine();
-                            // // }
-                            // // f.showFlights(sourceCity);
-                            // // System.out.print("Enter the Flight Number to display the list of
-                            // passengers registered in that flight... "
-                            // // );
-                            // // String flightNum = read1.nextLine();
-                            // // bookingAndReserving.displayRegisteredUsersForASpecificFlight(sourceCity
-                            // ,flightNum);
-                            // }
-                            // else {
-                            // System.out.println("Invalid Choice...No Response...!");
-                            // }
                         } else if (desiredOption == 8) {
                             c1.displayArtWork(5);
-                            f1.displayFlightSchedule();
+                            f.DisplayCities();
+                            System.out.print("\nEnter the desired City :\t ");
+                            String sourceCity = read1.nextLine();
+                            while (!f.validSourceCity(sourceCity)) {
+                                sourceCity = read1.nextLine();
+                            }
+                            f.showFlights(sourceCity);
                             System.out.print("Enter the Flight Number to delete the flight : ");
                             String flightNum = read1.nextLine();
-                            f1.deleteFlight(flightNum);
+                            f.deleteFlight(flightNum , sourceCity);
 
                         } else if (desiredOption == 0) {
                             bookingAndReserving.displayArtWork(22);
@@ -192,10 +163,7 @@ public class User {
                 }
             } else if (desiredOption == 2) {
                 printArtWork(2);
-                /*
-                 * If desiredOption is 2, then call the registration method to register a
-                 * user......
-                 */
+                
                 System.out.print("\nEnter the UserName to Register :    ");
                 String username = read1.nextLine();
                 System.out.print("Enter the Password to Register :     ");
@@ -240,20 +208,7 @@ public class User {
                         System.out.print("Enter the desired Choice :   ");
                         desiredChoice = read.nextInt();
                         if (desiredChoice == 1) {
-                            // bookingAndReserving.displayArtWork(1);
                             f1.displayFlightSchedule();
-                            // System.out.print("\nEnter the desired flight number to book :\t ");
-                            // String flightToBeBooked = read1.nextLine();
-                            // System.out.print("Enter the Number of tickets for " + flightToBeBooked + "
-                            // flight : ");
-                            // int numOfTickets = read.nextInt();
-                            // while (numOfTickets > 10) {
-                            // System.out.print(
-                            // "ERROR!! You can't book more than 10 tickets at a time for single
-                            // flight....Enter number of tickets again : ");
-                            // numOfTickets = read.nextInt();
-                            // }
-                            // bookingAndReserving.bookFlight(flightToBeBooked, numOfTickets, result[1]);
                             bookingAndReserving.displayArtWork(1);
                             f.DisplayCities();
                             System.out.print("\nEnter the desired Source :\t ");
@@ -290,8 +245,6 @@ public class User {
                             }
                         } else if (desiredChoice == 4) {
                             bookingAndReserving.displayArtWork(4);
-                            // f1.displayFlightSchedule();
-                            // f1.displayMeasurementInstructions();
                             f.DisplayCities();
                             System.out.print("\nEnter the desired Source :\t ");
                             String sourceCity = read1.nextLine();
@@ -505,9 +458,6 @@ public class User {
 
         System.out.println(artWork);
     }
-
-    // ************************************************************ Setters &
-    // Getters ************************************************************
 
     public static List<Customer> getCustomersCollection() {
         return customersCollection;
