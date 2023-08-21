@@ -1,8 +1,3 @@
-/*
- * This class is intended to be the main class for this Project. All necessary methods are getting calls from this class.
- *
- *
- */
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,19 +5,9 @@ import java.util.Scanner;
 
 public class User {
 
-    // ************************************************************ Fields
-    // ************************************************************
-
-    /*
-     * 2D Array to store admin credentials. Default credentials are stored on [0][0]
-     * index. Max num of admins can be 10....
-     */
+   
     static String[][] adminUserNameAndPassword = new String[100][2];
     private static List<Customer> customersCollection = new ArrayList<>();
-
-    // ************************************************************
-    // Behaviours/Methods
-    // ************************************************************
 
     public static void main(String[] args) {
         int countNumOfUsers = 1;
@@ -49,14 +34,7 @@ public class User {
 
         do {
             Scanner read1 = new Scanner(System.in);
-            /*
-             * If desiredOption is 1 then call the login method.... if default credentials
-             * are used then set the permission
-             * level to standard/default where the user can just view the customer's
-             * data...if not found, then return -1, and if
-             * data is found then show the user display menu for adding, updating, deleting
-             * and searching users/customers...
-             */
+           
             if (desiredOption == 1) {
 
                 /* Default username and password.... */
@@ -84,11 +62,7 @@ public class User {
                             "%-20sLogged in Successfully as \"%s\"..... For further Proceedings, enter a value from below....",
                             "", username);
 
-                    /*
-                     * Going to Display the CRUD operations to be performed by the privileged
-                     * user.....Which includes Creating, Updating
-                     * Reading(Searching) and deleting a customer....
-                     */
+                   
                     do {
                         System.out.printf("\n\n%-60s+++++++++ 2nd Layer Menu +++++++++%50sLogged in as \"%s\"\n", "",
                                 "", username);
@@ -105,15 +79,11 @@ public class User {
                         System.out.printf("%-30s (i) Enter 0 to Go back to the Main Menu/Logout....\n", "");
                         System.out.print("Enter the desired Choice :   ");
                         desiredOption = read.nextInt();
-                        /* If 1 is entered by the privileged user, then add a new customer...... */
                         if (desiredOption == 1) {
                             c1.displayArtWork(1);
                             c1.addNewCustomer();
                         } else if (desiredOption == 2) {
-                            /*
-                             * If 2 is entered by the privileged user, then call the search method of the
-                             * Customer class
-                             */
+                           
                             c1.displayArtWork(2);
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Search :\t");
@@ -121,11 +91,6 @@ public class User {
                             System.out.println();
                             c1.searchUser(customerID);
                         } else if (desiredOption == 3) {
-                            /*
-                             * If 3 is entered by the user, then call the update method of the Customer
-                             * Class with required
-                             * arguments.....
-                             */
                             bookingAndReserving.displayArtWork(2);
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Update its Data :\t");
@@ -137,10 +102,7 @@ public class User {
                             }
 
                         } else if (desiredOption == 4) {
-                            /*
-                             * If 4 is entered, then ask the user to enter the customer id, and then delete
-                             * that customer....
-                             */
+                           
                             bookingAndReserving.displayArtWork(3);
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Delete its Data :\t");
@@ -151,7 +113,6 @@ public class User {
                                 System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", customerID);
                             }
                         } else if (desiredOption == 5) {
-                            /* Call the Display Method of Customer Class.... */
                             c1.displayArtWork(3);
                             c1.displayCustomersData(false);
                         } else if (desiredOption == 6) {
