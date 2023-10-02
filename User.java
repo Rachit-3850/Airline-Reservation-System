@@ -208,7 +208,7 @@ public class User {
                         System.out.print("Enter the desired Choice :   ");
                         desiredChoice = read.nextInt();
                         if (desiredChoice == 1) {
-                            f1.displayFlightSchedule();
+                            // f1.displayFlightSchedule();
                             bookingAndReserving.displayArtWork(1);
                             f.DisplayCities();
                             System.out.print("\nEnter the desired Source :\t ");
