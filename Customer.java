@@ -14,7 +14,6 @@ public class Customer implements CustomerSevice {
     public List<Integer> numOfTicketsBookedByUser;
     public static final List<Customer> customerCollection = User.getCustomersCollection();
 
- 
 
     Customer() {
         this.userID = null;

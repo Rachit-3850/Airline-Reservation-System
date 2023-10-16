@@ -20,7 +20,7 @@ public class FlightReservation implements DisplayClass {
   
 
 
-    void bookFlight(String flightNo, int numOfTickets, String userID , String sourceCity) {
+    public void bookFlight(String flightNo, int numOfTickets, String userID , String sourceCity) {
         boolean isFound = false;
         for (Flight f1 : f.flightMap.get(sourceCity)) {
             if (flightNo.equalsIgnoreCase(f1.getFlightNumber())) {
@@ -52,7 +52,7 @@ public class FlightReservation implements DisplayClass {
         }
     }
 
-    void cancelFlight(String userID) {
+    public void cancelFlight(String userID) {
         String flightNum = "";
         Scanner read = new Scanner(System.in);
         int index = 0, ticketsToBeReturned;
@@ -167,7 +167,6 @@ public class FlightReservation implements DisplayClass {
                 customer.getAge(), customer.getEmail(), customer.getAddress(), customer.getPhone(), customer.numOfTicketsBookedByUser.get(index));
     }
 
-    @Override
     public void displayHeaderForUsers(Flight flight, List<Customer> c) {
         System.out.printf("\n%65s Displaying Registered Customers for Flight No. \"%-6s\" %s \n\n", "+++++++++++++", flight.getFlightNumber(), "+++++++++++++");
         System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+----------------+\n", "");
